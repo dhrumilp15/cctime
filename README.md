@@ -18,3 +18,8 @@ Take a look at /cc_gps for my Flutter GPS app!
 This proved to take a surprising amount of time, requiring _a LOT_ of debugging. A surprising amount for such a simple task...
 
 However, I learned a lot about good design, especially SRP (Single Responsibility Principle). It felt like overkill for this task and was the cause of a lot of struggle because I implemented it incorrectly at first.
+
+## Maze App
+
+Take a look at /cc_maze for my Flutter Maze app!
+
