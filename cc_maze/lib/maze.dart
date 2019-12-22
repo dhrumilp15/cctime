@@ -67,10 +67,15 @@ class Maze {
     }
   }
 
+  List<Cell> binTree(possibleMoves) {
+	return possibleMoves
+	  .where((cell) => cell.walls[0] != null || cell.walls[1] != null)
+	  .toList();
+  }
 
-  void choose() {}
 
-  Iterable<Cell> binTree() sync* { // sync* is basically to clean up making dynamic lists of widgets
+
+  Iterable<Cell> generate(algValue) sync* { // sync* is basically to clean up making dynamic lists of widgets
     var startcell = getCell(rand.nextInt(rows), rand.nextInt(cols));
 
     while (true) {
@@ -88,7 +93,18 @@ class Maze {
 
       if (possiblemoves.isNotEmpty) // if you can go to adjacent cells
       {
-        move = Move(startcell, possiblemoves[rand.nextInt(possiblemoves.length)]);
+        List<Cell> upright;
+
+        switch(algValue) // Currently supports scaling for algorithms that only control how new moves are selected
+		{
+		  default: //This includes the case of Binary Tree
+			upright = binTree(possiblemoves);
+			break;
+		}
+
+        Cell endcell = possiblemoves[rand.nextInt(upright.length)];
+
+        move = Move(startcell, endcell);
 
         skipped.addAll(
 		  possiblemoves
