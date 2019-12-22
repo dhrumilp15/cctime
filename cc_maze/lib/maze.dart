@@ -73,6 +73,12 @@ class Maze {
 	  .toList();
   }
 
+  List<Cell> simple(possibleMoves) {
+	return possibleMoves
+		.where((cell) => cell != null && !cell.visited)
+		.toList();
+  }
+
 
 
   Iterable<Cell> generate(algValue) sync* { // sync* is basically to clean up making dynamic lists of widgets
@@ -97,8 +103,11 @@ class Maze {
 
         switch(algValue) // Currently supports scaling for algorithms that only control how new moves are selected
 		{
+		  case 'Binary Tree':
+		    upright = binTree(possiblemoves);
+		    break;
 		  default: //This includes the case of Binary Tree
-			upright = binTree(possiblemoves);
+			upright = simple(possiblemoves);
 			break;
 		}
 
