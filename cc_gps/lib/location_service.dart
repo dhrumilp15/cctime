@@ -4,29 +4,26 @@ import 'dart:async';
 
 class LocationService {
   UserLocation _currentLocation;
-
-
+  
   Location location = new Location();
 
-
-  Future<UserLocation> getLocation() async {
-    try {
-      var userLocation = await location.getLocation();
-      _currentLocation = UserLocation(
-        latitude: userLocation.latitude,
-        longitude: userLocation.longitude,
-      );
-    } on Exception catch (e) {
-      print('Unlucky - couldn\'t get the location: ${e.toString()}');
-    }
-
-    return _currentLocation;
-  }
+//  Future<UserLocation> getLocation() async {
+//    try {
+//      var userLocation = await location.getLocation();
+//      _currentLocation = UserLocation(
+//        latitude: userLocation.latitude,
+//        longitude: userLocation.longitude,
+//      );
+//    } on Exception catch (e) {
+//      print('Unlucky - couldn\'t get the location: ${e.toString()}');
+//    }
+//    return _currentLocation;
+//  }
 
   StreamController<UserLocation> _locationController = StreamController<UserLocation>();
 
   Stream<UserLocation> get locationStream => _locationController.stream;
-
+  // Constructor
   LocationService() {
     location.requestPermission()
         .then( (granted) {

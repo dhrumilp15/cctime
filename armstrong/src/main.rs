@@ -14,6 +14,8 @@ fn main() {
 
         io::stdin().read_line(&mut str_number)
             .expect("Failed to read line");
+
+        str_number = str_number.trim().to_string();
         
         let number: u32 = match str_number.trim().parse() {
             Ok(num) => num,
@@ -23,10 +25,10 @@ fn main() {
             }
         };
         
-        let numlength = str_number.trim().chars().count() as u32;
+        let numlength = str_number.len() as u32;
 
         let mut armsum = 0;
-        for digit in str_number.trim().chars()
+        for digit in str_number.chars()
         {
             const RADIX: u32 = 10;
             let digit : u32 = digit.to_digit(RADIX).unwrap();
