@@ -60,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
 	}
   }
 
-  String algValue = 'Binary Tree';
-  List<String> _algValue = <String>['Binary Tree']; // Add algorithms here
+  String algValue = 'simple';
+  List<String> _algValue = <String>['simple','Binary Tree']; // Add algorithms here
 
   int rows = 0;
   List<int> _rows = Iterable<int>.generate(21).toList();
@@ -129,7 +129,6 @@ class _MyHomePageState extends State<MyHomePage> {
 					),
 				  )
 				),
-				Text(''),
 				Row(
 				  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 				  children: [
