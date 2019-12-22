@@ -40,16 +40,16 @@ class Maze {
   int onedtrans(int row, int col) => row * rows + col; // Easier to treat the array as 1d, can map to 2d array in view
 
   Maze(this.rows, this.cols) : maze = List<Cell>(rows * cols) {
-    for (var row = 0; row < rows; row++)
+    for (var col = 0; col < cols; ++col)
     {
-      for (var col = 0; col < cols; col++)
+      for (var row = 0; row < rows; ++row)
       {
         maze[onedtrans(row, col)] = Cell(row, col);
       }
     }
   }
 
-  Cell getCell(int row, int col) => (row < 0 || row > rows || col < 0 || col >= cols) ? null : maze[onedtrans(row, col)];
+  Cell getCell(int row, int col) => (row < 0 || row >= rows || col < 0 || col >= cols) ? null : maze[onedtrans(row, col)];
 
   Cell adjacentCell(Cell sourceCell, Walls wall) {
     switch(wall)
@@ -77,6 +77,8 @@ class Maze {
       //yield Cell;
 	  startcell.visited = true;
 
+	  yield startcell;
+
       var possiblemoves = Walls.values
 		.map((wall) => adjacentCell(startcell, wall))
 		.where((cell) => cell != null && !cell.visited)
@@ -87,6 +89,7 @@ class Maze {
       if (possiblemoves.isNotEmpty) // if you can go to adjacent cells
       {
         move = Move(startcell, possiblemoves[rand.nextInt(possiblemoves.length)]);
+
         skipped.addAll(
 		  possiblemoves
 			  .where((cell) => !identical(cell, move.to))
@@ -94,12 +97,13 @@ class Maze {
 		);
       }
       else {// if you've visited the adjacent cells, just jump to an unseen one
-        move = skipped.firstWhere((nextmove) => !nextmove.to.visited, orElse: null);
+        move = skipped.firstWhere((nextmove) => !nextmove.to.visited, orElse: () => null);
 	  }
 
       if (move != null) // Handles breaking down wall between the cells in the move
 	  {
-		var wallstart = Walls.values.firstWhere((wall) => identical(adjacentCell(startcell, wall), move.to));
+		var wallstart = Walls.values
+			.firstWhere((wall) => identical(adjacentCell(move.from, wall), move.to));
 		var wallend = Walls.values[(4 - (wallstart.index + 1))];
 
 		move.from.walls[wallstart.index] = false;
