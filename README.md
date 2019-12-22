@@ -25,6 +25,6 @@ Take a look at /cc_maze for my Flutter Maze app!
 
 I took special consideration to keep the code easy to change, specifically paying attention to SRP.
 
-I also implemented a side menu to change the chosen algorithm and dimensions!
+I also implemented a side menu to change the chosen algorithm and dimensions! This should hopefully help others that build off of this.
 
-Currently supports binary tree and what I'll call 'quaternary tree'.
+Currently supports binary tree and a more random algorithm.
