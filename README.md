@@ -23,3 +23,8 @@ However, I learned a lot about good design, especially SRP (Single Responsibilit
 
 Take a look at /cc_maze for my Flutter Maze app!
 
+I took special consideration to keep the code easy to change, specifically paying attention to SRP.
+
+I also implemented a side menu to change the chosen algorithm and dimensions!
+
+Currently supports binary tree and what I'll call 'quaternary tree'.
