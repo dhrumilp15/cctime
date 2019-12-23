@@ -33,18 +33,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var maze;
+  final int startrows = 10;
+  final int startcols = 10;
   Iterator<Cell> iter;
 
   @override
   void initState() {
     super.initState();
-	gen(4,4);
+	gen(startrows,startcols);
   }
 
   void gen(rows, cols, {String algValue = ''}) {
     maze = Maze(rows, cols);
     iter = maze.generate(algValue).iterator;
-	Timer.periodic(Duration(milliseconds: 50), onTick);
+	Timer.periodic(Duration(milliseconds: 2), onTick); // for the delay effect
   }
 
   void onTick(Timer timer) {
@@ -78,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
 		onPressed: () {
 		  if (rows == 0 && cols == 0)
 		  {
-		    gen(4,4);
+		    gen(startrows,startcols);
 		  }
 		  else if (iter == null)
 		  {
