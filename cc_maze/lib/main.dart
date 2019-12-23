@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void gen(rows, cols, {String algValue = ''}) {
     maze = Maze(rows, cols);
     iter = maze.generate(algValue).iterator;
-	Timer.periodic(Duration(milliseconds: 15), onTick);
+	Timer.periodic(Duration(milliseconds: 2), onTick); // for the delay effect
   }
 
   void onTick(Timer timer) {
