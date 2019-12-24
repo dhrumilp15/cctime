@@ -1,87 +1,87 @@
-Map<String, dynamic> json =
-'''
-{
-  "dogs" : [
-    {
-      "name" : "Toto",
-      "filepath" : "images/toto.jpg"
-    },
-    {
-      "name" : "Laika",
-      "filepath" : "images/laika.jpg"
-    },
-    {
-      "name" : "Lassie",
-      "filepath" : "images/lassie.jpg"
-    },
-    {
-      "name" : "Scooby",
-      "filepath" : "images/scooby.jpg"
-    },
-    {
-      "name" : "Balto",
-      "filepath" : "images/balto.jpg"
-    },
-    {
-      "name" : "Bo",
-      "filepath" : "images/bo.jpg"
-    },
-    {
-      "name" : "Sunny",
-      "filepath" : "images/sunny.jpg"
-    },
-    {
-      "name" : "Higgins",
-      "filepath" : "images/higgins.jpg"
-    },
-    {
-      "name" : "Doug",
-      "filepath" : "images/doug.jpg"
-    },
-    {
-      "name" : "Wishbone",
-      "filepath" : "images/wishbone.jpg"
-    },
-    {
-      "name" : "Rin Tin Tin",
-      "filepath" : "images/rintintin.jpg"
-    },
-    {
-      "name" : "Old Yeller",
-      "filepath" : "images/oldyeller.jpg"
-    },
-    {
-      "name" : "Sinbad",
-      "filepath" : "images/sinbad.jpg"
-    },
-    {
-      "name" : "Trakr",
-      "filepath" : "images/trakr.jpg"
-    },
-    {
-      "name" : "Bobbie",
-      "filepath" : "images/bobbie.jpg"
-    },
-    {
-      "name" : "Jofi",
-      "filepath" : "images/jofi.jpg"
-    },
-    {
-      "name" : "Koko",
-      "filepath" : "images/koko.jpeg"
-    },
-    {
-      "name" : "Snowy",
-      "filepath" : "images/snowy.jpg"
-    },
-    {
-      "name" : "Spot",
-      "filepath" : "images/spot.jpg"
-    },
-    {
-      "name" : "Milie",
-      "filepath" : "images/milie.jpg"
-    }
-  ]
+class images {
+  static final Map<String, dynamic> json =
+  {
+    "dogs" : [
+      {
+        "name" : "Toto",
+        "filepath" : "lib/assets/images/toto.jpg"
+      },
+      {
+        "name" : "Laika",
+        "filepath" : "lib/assets/images/laika.jpg"
+      },
+      {
+        "name" : "Lassie",
+        "filepath" : "lib/assets/images/lassie.jpg"
+      },
+      {
+        "name" : "Scooby",
+        "filepath" : "lib/assets/images/scooby.jpg"
+      },
+      {
+        "name" : "Balto",
+        "filepath" : "lib/assets/images/balto.jpg"
+      },
+      {
+        "name" : "Bo",
+        "filepath" : "lib/assets/images/Bo.jpg"
+      },
+      {
+        "name" : "Sunny",
+        "filepath" : "lib/assets/images/sunny.jpg"
+      },
+      {
+        "name" : "Higgins",
+        "filepath" : "lib/assets/images/higgins.jpg"
+      },
+      {
+        "name" : "Doug",
+        "filepath" : "lib/assets/images/doug.jpg"
+      },
+      {
+        "name" : "Wishbone",
+        "filepath" : "lib/assets/images/wishbone.jpg"
+      },
+      {
+        "name" : "Rin Tin Tin",
+        "filepath" : "lib/assets/images/rintintin.jpg"
+      },
+      {
+        "name" : "Old Yeller",
+        "filepath" : "lib/assets/images/oldyeller.jpg"
+      },
+      {
+        "name" : "Sinbad",
+        "filepath" : "lib/assets/images/sinbad.jpg"
+      },
+      {
+        "name" : "Trakr",
+        "filepath" : "lib/assets/images/trakr.jpg"
+      },
+      {
+        "name" : "Bobbie",
+        "filepath" : "lib/assets/images/bobbie.jpg"
+      },
+      {
+        "name" : "Jofi",
+        "filepath" : "lib/assets/images/jofi.jpg"
+      },
+      {
+        "name" : "Koko",
+        "filepath" : "lib/assets/images/koko.jpeg"
+      },
+      {
+        "name" : "Snowy",
+        "filepath" : "lib/assets/images/snowy.jpg"
+      },
+      {
+        "name" : "Spot",
+        "filepath" : "lib/assets/images/spot.jpg"
+      },
+      {
+        "name" : "Milie",
+        "filepath" : "lib/assets/images/milie.jpg"
+      }
+    ],
+  };
 }
-'''

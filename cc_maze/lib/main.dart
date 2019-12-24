@@ -40,26 +40,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-	gen(startrows,startcols);
+		gen(startrows,startcols);
   }
 
   void gen(rows, cols, {String algValue = ''}) {
     maze = Maze(rows, cols);
     iter = maze.generate(algValue).iterator;
-	Timer.periodic(Duration(milliseconds: 2), onTick); // for the delay effect
+		Timer.periodic(Duration(milliseconds: 2), onTick); // for the delay effect
   }
 
   void onTick(Timer timer) {
     if (iter.moveNext())
-	{
-	  var visited = iter.current;
-	  setState(() {});
-	  debugPrint('visited: (${visited.row},${visited.col})');
-	} else {
-      timer.cancel();
-      iter = null;
-      setState(() {});
-	}
+		{
+			var visited = iter.current;
+			setState(() {});
+			debugPrint('visited: (${visited.row},${visited.col})');
+		} else {
+				timer.cancel();
+				iter = null;
+				setState(() {});
+		}
   }
 
   String algValue = 'simple';
@@ -77,139 +77,138 @@ class _MyHomePageState extends State<MyHomePage> {
 	  backgroundColor: Colors.black12,
 	  appBar: AppBar(title: Text('CC Maze')),
 	  floatingActionButton: FloatingActionButton(
-		onPressed: () {
-		  if (rows == 0 && cols == 0)
-		  {
-		    gen(startrows,startcols);
-		  }
-		  else if (iter == null)
-		  {
-		    gen(rows, cols, algValue: algValue);
-		  }
-		  else return null;
-		},
-		child: Icon(Icons.autorenew),
+			onPressed: () {
+				if (rows == 0 && cols == 0)
+				{
+					gen(startrows,startcols);
+				}
+				else if (iter == null)
+				{
+					gen(rows, cols, algValue: algValue);
+				} else return null;
+			},
+			child: Icon(Icons.autorenew),
 	  ),
 	  drawer: Drawer(
-		child: ListView(
-	          padding: EdgeInsets.zero,
-	          children: <Widget>[
-				DrawerHeader(
-				  child: Text('Maze Menu',
-					style: TextStyle(
-						fontWeight: FontWeight.bold,
-					  	fontSize: 50.0,
-					  	color: Colors.white.withOpacity(0.7),
-					)
-				  ),
-				  decoration: BoxDecoration(
-					color: Colors.blue,
-				  ),
-				),
-				Center(
-				  child: Text('Algorithm'),
-				),
-				DropdownButtonHideUnderline(
-				  child: ButtonTheme(
-					alignedDropdown: true,
-					child: DropdownButton<String>(
-					  isExpanded: true,
-					  hint: new Text('Algorithm'),
-					  elevation: 16,
-					  value: algValue,
-					  onChanged: (String newValue) {
-						setState(() {
-						  algValue = newValue;
-						});
-					  },
-					  items: _algValue.map((String value) {
-						return new DropdownMenuItem<String>(
-						  value: value,
-						  child: Text(value),
-						);
-					  }).toList(),
-					),
-				  )
-				),
-				Row(
-				  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-				  children: [
-					Text('Row'),
-					Text('x'),
-					Text('Col')
-				  ]
-				),
-				Row(
-				  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-				  children: [
-				    DropdownButtonHideUnderline(
-					  child: ButtonTheme(
-						alignedDropdown: true,
-						child: DropdownButton<String>(
-						  hint: Text('rows'),
-						  value: rows.toString(),
-						  elevation: 16,
-						  onChanged: (String newValue) {
-							setState(() {
-							  rows = int.parse(newValue);
-							});
-						  },
-						  items: _rows.map((int value) {
-							return new DropdownMenuItem<String>(
-							  value: value.toString(),
-							  child: Text(value.toString()),
-							);
-						  }).toList(),
+			child: ListView(
+				padding: EdgeInsets.zero,
+				children: <Widget>[
+					DrawerHeader(
+						child: Text('Maze Menu',
+							style: TextStyle(
+								fontWeight: FontWeight.bold,
+									fontSize: 50.0,
+									color: Colors.white.withOpacity(0.7),
+							)
 						),
-					  )
+						decoration: BoxDecoration(
+						color: Colors.blue,
+						),
 					),
-					Text('x'),
+					Center(
+						child: Text('Algorithm'),
+					),
 					DropdownButtonHideUnderline(
-					  child: ButtonTheme(
+						child: ButtonTheme(
 						alignedDropdown: true,
 						child: DropdownButton<String>(
-						  hint: Text('row'),
-						  value: cols.toString(),
-						  elevation: 16,
-						  onChanged: (String newValue) {
-							setState(() {
-							  cols = int.parse(newValue);
-							});
-						  },
-						  items: _cols.map((int value) {
-							return new DropdownMenuItem<String>(
-							  value: value.toString(),
-							  child: Text(value.toString()),
-							);
-						  }).toList(),
+							isExpanded: true,
+							hint: new Text('Algorithm'),
+							elevation: 16,
+							value: algValue,
+							onChanged: (String newValue) {
+								setState(() {
+									algValue = newValue;
+								});
+							},
+							items: _algValue.map((String value) {
+								return new DropdownMenuItem<String>(
+									value: value,
+									child: Text(value),
+								);
+							}).toList(),
+						),
 						)
-					  )
 					),
-				  ]
-				)
-			  ]
-		),
+					Row(
+						mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+						children: [
+							Text('Row'),
+							Text('x'),
+							Text('Col')
+						]
+					),
+					Row(
+						mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+						children: [
+							DropdownButtonHideUnderline(
+								child: ButtonTheme(
+								alignedDropdown: true,
+								child: DropdownButton<String>(
+									hint: Text('rows'),
+									value: rows.toString(),
+									elevation: 16,
+									onChanged: (String newValue) {
+										setState(() {
+											rows = int.parse(newValue);
+										});
+									},
+									items: _rows.map((int value) {
+										return new DropdownMenuItem<String>(
+											value: value.toString(),
+											child: Text(value.toString()),
+										);
+									}).toList(),
+								),
+								)
+						),
+						Text('x'),
+						DropdownButtonHideUnderline(
+							child: ButtonTheme(
+							alignedDropdown: true,
+							child: DropdownButton<String>(
+								hint: Text('row'),
+								value: cols.toString(),
+								elevation: 16,
+								onChanged: (String newValue) {
+									setState(() {
+										cols = int.parse(newValue);
+									});
+								},
+								items: _cols.map((int value) {
+									return new DropdownMenuItem<String>(
+										value: value.toString(),
+										child: Text(value.toString()),
+									);
+								}).toList(),
+							)
+							)
+						),
+						]
+					)
+					]
+			),
 	  ),
 	  body: Center(
-		child: AspectRatio(
-		  aspectRatio: 1,
-			child: Column(
-			  children: [
-				for (var row = 0; row != maze.rows; ++row)
-				  Expanded(
-					  child: Row(
-						  children: [
-							for (var col = 0; col != maze.cols; ++col)
-							  Expanded(
-								  child: CellView(maze.getCell(row, col))
-							  )
-						  ]
-					  )
-				  )
-			  ],
-			)
-		),
-	  )
+			child: AspectRatio(
+				aspectRatio: 1,
+				child: Column(
+					children: [
+						for (var row = 0; row != maze.rows; ++row)
+							Expanded(
+									child: Row(
+											children: [
+												for (var col = 0; col != maze.cols; ++col)
+													Expanded(
+															child: CellView(maze.getCell(row, col))
+													)
+											]
+									)
+							)
+					],
+				)
+			),
+		)
   );
 }
 
@@ -232,8 +231,7 @@ class CellView extends StatelessWidget {
 	);
   }
 
-  BorderSide getside(Walls wall) =>
-	BorderSide(
+  BorderSide getside(Walls wall) => BorderSide(
 	  width: 2.0,
 	  style: cell.walls[wall.index] ? BorderStyle.solid : BorderStyle.none,
 	);
