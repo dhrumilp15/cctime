@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'quiz.dart';
 import 'dart:async';
 import 'package:quiqui/assets/images.dart';
+import 'package:quiver/async.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,7 +37,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var quiz;
+  int _start = 10;
+  int _current = 10;
   Timer _timer;
+  var sub;
 
   @override
 	void initState() {
@@ -47,16 +51,64 @@ class _MyHomePageState extends State<MyHomePage> {
 	void initQuiz() {
   	quiz = Quiz();
   	Timer.periodic(Duration(milliseconds: 20), onTick);
+  	if (sub) this.sub.cancel();
+  	initTimer();
+  	startTimer();
 	}
 
 	void onTick(Timer timer) {
-  	if (true) {
-  		setState(() {});
-		} else {
-  		timer.cancel();
-  		setState(() {});
-		}
+  	setState(() {});
 	}
+
+	void initTimer() {
+  	_start = 10;
+  	_current = 10;
+	}
+
+	void startTimer() {
+		CountdownTimer countDownTimer = new CountdownTimer(
+			new Duration(seconds: _start),
+			new Duration(seconds: 1),
+		);
+
+		this.sub = countDownTimer.listen(null);
+		sub.onData((duration) {
+			setState(() { _current = _start - duration.elapsed.inSeconds; });
+		});
+
+		sub.onDone(() {
+			showAlertDialog(context);
+			sub.cancel();
+		});
+	}
+
+	void showAlertDialog(BuildContext context) {
+	  Widget gotIt = FlatButton(
+			  child: Text('Got it!'),
+			  onPressed: () {
+				  quiz.incorrect();
+				  initTimer();
+				  Navigator.of(context).pop();
+				  startTimer();
+			  }
+	  );
+
+	  AlertDialog alert = AlertDialog(
+		  title: Text("Answer"),
+		  content: Text(
+				  'This dog\'s name is ${quiz.getDog(quiz.dogIndex).getName()}'),
+		  actions: [
+			  gotIt,
+		  ],
+	  );
+
+	  showDialog(
+			  context: context,
+			  builder: (BuildContext context) {
+				  return alert;
+			  }
+	  );
+  }
 
 	@override
   Widget build(BuildContext context) {
@@ -66,16 +118,78 @@ class _MyHomePageState extends State<MyHomePage> {
 			    ),
 			    body: Column(
 					    children: <Widget>[
-						    (quiz.dogs.length > 0) ? ImageView(quiz.getDog(quiz.dogIndex).file) : ImageView('lib/assets/images/icon.png'),
+						    Stack(
+							    children: <Widget>[
+								    Container(
+									    child: (quiz.dogs.length > 0) ? ImageView(quiz.getDog(quiz.dogIndex).getFile()) : ImageView('lib/assets/images/icon.png'),
+								    ),
+								    (quiz.dogs.length > 0) ? Positioned(
+									    top: 15,
+									    right: MediaQuery
+											    .of(context)
+											    .size
+											    .width / 2,
+									    child: Text(
+											    '$_current',
+										    style: (_current > 5) ? TextStyle(color: Colors.black) : TextStyle(color: Colors.red)
+									    ),
+								    ) : Container(height:0)
+
+							    ]
+						    ),
 						    Divider(),
 						    Column(
 								    mainAxisAlignment: MainAxisAlignment.center,
-								    children: (quiz.dogs.length > 0) ? [YesNo(quiz)] : [
+								    children: (quiz.dogs.length > 0) ? [
+								    Container(
+										    child: Row(
+												    mainAxisAlignment: MainAxisAlignment.center,
+												    children: <Widget>[
+													    ButtonTheme(
+														    minWidth: MediaQuery
+																    .of(context)
+																    .size
+																    .width / 2,
+														    height: 200,
+														    child: RaisedButton(
+															    onPressed: () {
+																    quiz.correct();
+																    if (quiz.dogs.length > 0) {
+																	    this.sub.cancel();
+																    	initTimer();
+																	    startTimer();
+																    }
+															    },
+															    color: Colors.green,
+															    child: Icon(Icons.check),
+														    ),
+													    ),
+													    ButtonTheme(
+														    minWidth: MediaQuery
+																    .of(context)
+																    .size
+																    .width / 2,
+														    height: 200,
+														    child: RaisedButton(
+															    onPressed: () {
+																    if (quiz.dogs.length > 0)
+																	    showAlertDialog(context);
+																    else
+																	    null;
+															    },
+															    color: Colors.red,
+															    child: Icon(Icons.close),
+														    ),
+													    )
+												    ]
+										    )
+								    )
+								    ] : [
 									    Column(
 											    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-											    children: <Widget>[
+											    children: [
 												    Text(
-														    'Your score is ${quiz.score} out of ${images.json['dogs'].length}!',
+														    'You got ${quiz.score} out of ${images.json['dogs'].length} correct!',
 														    style: TextStyle(fontSize: 20.0)
 												    ),
 												    Text(
@@ -93,7 +207,6 @@ class _MyHomePageState extends State<MyHomePage> {
 																    }
 														    )
 												    ),
-
 											    ]
 									    )
 								    ]
@@ -111,7 +224,7 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+  	return Container(
 	    padding: EdgeInsets.only(top : 50.0, bottom: 50.0),
         child: Row(
 		        mainAxisAlignment: MainAxisAlignment.center,
@@ -133,45 +246,6 @@ class ImageView extends StatelessWidget {
               )
       ]
     )
-    );
-  }
-}
-
-class YesNo extends StatelessWidget {
-  final Quiz quiz;
-
-  YesNo(this.quiz);
-
-	@override
-  Widget build(BuildContext context) {
-		return Container(
-	    child: Row(
-//		    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-		    children: <Widget>[
-		    	ButtonTheme(
-				    minWidth: MediaQuery.of(context).size.width / 2,
-				    height: 200,
-				    child: RaisedButton(
-					    onPressed: () {
-						    quiz.correct(); // Update score and dogList
-					    },
-					    color: Colors.green,
-					    child: Icon(Icons.check),
-				    ),
-			    ),
-			    ButtonTheme(
-				    minWidth: MediaQuery.of(context).size.width / 2,
-				    height: 200,
-				    child: RaisedButton(
-					    onPressed: () {
-					    	quiz.incorrect();
-					    },
-					    color: Colors.red,
-					    child: Icon(Icons.close),
-				    ),
-			    )
-		    ]
-	    )
     );
   }
 }

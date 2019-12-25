@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:quiqui/assets/images.dart';
 import 'dart:core';
+import 'dart:math';
 
 List<Dog> jsonHandler(file, key) {
   return file[key].map<Dog>((json) => Dog.fromJson(json)).toList();
@@ -18,6 +19,14 @@ class Dog {
       file: json['filepath'] as String,
     );
   }
+
+  String getName() {
+    return this.name;
+  }
+
+  String getFile() {
+    return this.file;
+  }
 }
 
 class Quiz {
@@ -26,9 +35,10 @@ class Quiz {
   int dogIndex = 0;
   List<Dog> seen;
   Dog prev;
+  final random = Random();
 
   Quiz() {
-    this.dogs = jsonHandler(images.json, 'dogs');
+    this.dogs = shuffle(jsonHandler(images.json, 'dogs'));
     this.seen = new List();
   } // Not sure what to put in the constructor
 
@@ -56,19 +66,17 @@ class Quiz {
     return dogs[this.dogIndex];
   }
 
-  Iterable<Dog> present() sync* {
-  	Dog current = getDog(dogIndex); // should start at 0 - dog: toto
+  List shuffle(List items) {
+	  for (var i = items.length - 1; i > 0; i--) {
 
-    while (true)
-    {
-      yield current;
+		  var n = random.nextInt(i + 1);
 
-//      dogIndex = (dogIndex + 1) % 20;
+		  var temp = items[i];
+		  items[i] = items[n];
+		  items[n] = temp;
+	  }
 
-      if (dogs.length == 0) {
-        break;
-      }
-    }
+	  return items;
   }
 
 
