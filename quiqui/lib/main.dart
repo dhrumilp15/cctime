@@ -36,8 +36,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var quiz;
-//  String name = 'bingbong';
-  Iterator<Dog> iter;
+  Timer _timer;
 
   @override
 	void initState() {
@@ -47,52 +46,63 @@ class _MyHomePageState extends State<MyHomePage> {
 
 	void initQuiz() {
   	quiz = Quiz();
-  	iter = quiz.present().iterator;
   	Timer.periodic(Duration(milliseconds: 20), onTick);
 	}
 
 	void onTick(Timer timer) {
-  	if (quiz.dogs.length > 0) {
+  	if (true) {
   		setState(() {});
 		} else {
   		timer.cancel();
-  		iter = null;
   		setState(() {});
 		}
 	}
 
 	@override
   Widget build(BuildContext context) {
-    if (!(quiz.dogs.length > 0)) {
-	    return Scaffold(
-			    appBar: AppBar(
-					    title: Text('Dogs: Qui, Qui (Who is Who)')
-			    ),
-			    body: Center(
-					    child: Text("Nice! You got a score of ${quiz.score.toString()} out of ${images.json['dogs'].length.toString()}!")
-			    )
-	    );
-    } else {
-	    return Scaffold(
+  	return Scaffold(
 			    appBar: AppBar(
 				    title: Text('Dogs: Qui, Qui (Who is Who)'),
 			    ),
 			    body: Column(
 					    children: <Widget>[
-						    ImageView(quiz.getDog(quiz.dogIndex).file),
+						    (quiz.dogs.length > 0) ? ImageView(quiz.getDog(quiz.dogIndex).file) : ImageView('lib/assets/images/icon.png'),
 						    Divider(),
 						    Column(
-								    crossAxisAlignment: CrossAxisAlignment.center,
-								    children: [YesNo(quiz)]
+								    mainAxisAlignment: MainAxisAlignment.center,
+								    children: (quiz.dogs.length > 0) ? [YesNo(quiz)] : [
+									    Column(
+											    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+											    children: <Widget>[
+												    Text(
+														    'Your score is ${quiz.score} out of ${images.json['dogs'].length}!',
+														    style: TextStyle(fontSize: 20.0)
+												    ),
+												    Text(
+														    '',
+														    style: TextStyle(fontSize: 20.0)
+												    ),
+												    ButtonTheme(
+														    child: RaisedButton(
+																    child: Text(
+																		    'Retry?',
+																		    style: TextStyle(color: Colors.white)
+																    ),
+																    onPressed: () {
+																	    quiz = Quiz();
+																    }
+														    )
+												    ),
+
+											    ]
+									    )
+								    ]
 						    )
 					    ]
 			    )
 	    );
     }
-
-
   }
-}
 
 class ImageView extends StatelessWidget {
   final String file;
@@ -145,7 +155,7 @@ class YesNo extends StatelessWidget {
 					    onPressed: () {
 						    quiz.correct(); // Update score and dogList
 					    },
-					    color: Colors.lightGreen,
+					    color: Colors.green,
 					    child: Icon(Icons.check),
 				    ),
 			    ),
@@ -155,8 +165,8 @@ class YesNo extends StatelessWidget {
 				    child: RaisedButton(
 					    onPressed: () {
 					    	quiz.incorrect();
-					    }, //Just move on to next picture
-					    color: Colors.redAccent,
+					    },
+					    color: Colors.red,
 					    child: Icon(Icons.close),
 				    ),
 			    )
@@ -165,5 +175,3 @@ class YesNo extends StatelessWidget {
     );
   }
 }
-
-

@@ -25,6 +25,7 @@ class Quiz {
   int score = 0;
   int dogIndex = 0;
   List<Dog> seen;
+  Dog prev;
 
   Quiz() {
     this.dogs = jsonHandler(images.json, 'dogs');
@@ -32,7 +33,7 @@ class Quiz {
   } // Not sure what to put in the constructor
 
   void correct() {
-    if (!(dogs.length > 0)) return;
+  	if (!(dogs.length > 0)) return;
     Dog imp = getDog(dogIndex);
     if (dogs.contains(imp) && !seen.contains(imp)) score++;
     dogs.remove(imp);
@@ -41,14 +42,17 @@ class Quiz {
 
   void incorrect() {
     if (!(dogs.length > 0)) return;
-    seen.add(getDog(dogIndex));
+    Dog imp = getDog(dogIndex);
+    seen.add(imp);
     dogIndex++;
   }
 
-
   Dog getDog(int dogindex) {
-    if (!(dogs.length > 0)) return null;
-    if (dogs.length > 0) this.dogIndex = dogindex % dogs.length;
+    if (dogs.length > 0) {
+    	this.dogIndex = dogindex % dogs.length;
+    } else {
+    	return null;
+    }
     return dogs[this.dogIndex];
   }
 
