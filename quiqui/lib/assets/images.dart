@@ -15,7 +15,7 @@ class images {
         "filepath" : "lib/assets/images/lassie.jpg"
       },
       {
-        "name" : "Scooby",
+        "name" : "Scooby Doo",
         "filepath" : "lib/assets/images/scooby.jpg"
       },
       {

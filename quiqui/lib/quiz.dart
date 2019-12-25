@@ -79,5 +79,9 @@ class Quiz {
 	  return items;
   }
 
+  int getScore() {
+  	return this.score;
+  }
+
 
 }

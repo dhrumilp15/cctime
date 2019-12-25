@@ -4,6 +4,7 @@ import 'quiz.dart';
 import 'dart:async';
 import 'package:quiqui/assets/images.dart';
 import 'package:quiver/async.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,15 +15,6 @@ class MyApp extends StatelessWidget {
 	return MaterialApp(
 	  title: 'Flutter Demo',
 	  theme: ThemeData(
-		// This is the theme of your application.
-		//
-		// Try running your application with "flutter run". You'll see the
-		// application has a blue toolbar. Then, without quitting the app, try
-		// changing the primarySwatch below to Colors.green and then invoke
-		// "hot reload" (press "r" in the console where you ran "flutter run",
-		// or simply save your changes to "hot reload" in a Flutter IDE).
-		// Notice that the counter didn't reset back to zero; the application
-		// is not restarted.
 		primarySwatch: Colors.blue,
 	  ),
 	  home: MyHomePage(),
@@ -39,7 +31,6 @@ class _MyHomePageState extends State<MyHomePage> {
   var quiz;
   int _start = 10;
   int _current = 10;
-  Timer _timer;
   var sub;
 
   @override
@@ -51,10 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
 	void initQuiz() {
   	quiz = Quiz();
   	Timer.periodic(Duration(milliseconds: 20), onTick);
-  	if (sub) this.sub.cancel();
-  	initTimer();
-  	startTimer();
-	}
+  	try {
+		  this.sub.cancel();
+	  } catch (stackTrace) {print(stackTrace);}
+		  initTimer();
+		  startTimer();
+	  }
 
 	void onTick(Timer timer) {
   	setState(() {});
@@ -87,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
 			  child: Text('Got it!'),
 			  onPressed: () {
 				  quiz.incorrect();
+				  this.sub.cancel();
 				  initTimer();
 				  Navigator.of(context).pop();
 				  startTimer();
@@ -134,88 +128,46 @@ class _MyHomePageState extends State<MyHomePage> {
 										    style: (_current > 5) ? TextStyle(color: Colors.black) : TextStyle(color: Colors.red)
 									    ),
 								    ) : Container(height:0)
-
 							    ]
 						    ),
 						    Divider(),
 						    Column(
 								    mainAxisAlignment: MainAxisAlignment.center,
-								    children: (quiz.dogs.length > 0) ? [
-								    Container(
-										    child: Row(
-												    mainAxisAlignment: MainAxisAlignment.center,
-												    children: <Widget>[
-													    ButtonTheme(
-														    minWidth: MediaQuery
-																    .of(context)
-																    .size
-																    .width / 2,
-														    height: 200,
-														    child: RaisedButton(
-															    onPressed: () {
-																    quiz.correct();
-																    if (quiz.dogs.length > 0) {
-																	    this.sub.cancel();
-																    	initTimer();
-																	    startTimer();
-																    }
-															    },
-															    color: Colors.green,
-															    child: Icon(Icons.check),
-														    ),
-													    ),
-													    ButtonTheme(
-														    minWidth: MediaQuery
-																    .of(context)
-																    .size
-																    .width / 2,
-														    height: 200,
-														    child: RaisedButton(
-															    onPressed: () {
-																    if (quiz.dogs.length > 0)
-																	    showAlertDialog(context);
-																    else
-																	    null;
-															    },
-															    color: Colors.red,
-															    child: Icon(Icons.close),
-														    ),
-													    )
-												    ]
-										    )
-								    )
-								    ] : [
-									    Column(
-											    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-											    children: [
-												    Text(
-														    'You got ${quiz.score} out of ${images.json['dogs'].length} correct!',
-														    style: TextStyle(fontSize: 20.0)
-												    ),
-												    Text(
-														    '',
-														    style: TextStyle(fontSize: 20.0)
-												    ),
-												    ButtonTheme(
-														    child: RaisedButton(
-																    child: Text(
-																		    'Retry?',
-																		    style: TextStyle(color: Colors.white)
-																    ),
-																    onPressed: () {
-																	    quiz = Quiz();
-																    }
-														    )
-												    ),
-											    ]
-									    )
-								    ]
+								    children: (quiz.dogs.length > 0) ? [yesNo(quiz,this)] : [finalPage(quiz, this)]
 						    )
 					    ]
 			    )
 	    );
     }
   }
+
+class timeHandler extends StatefulWidget {
+  @override
+  _timeHandlerState createState() => _timeHandlerState();
+}
+
+class _timeHandlerState extends State<timeHandler> {
+  int _start = 10;
+  int _current = 10;
+
+	@override
+  Widget build(BuildContext context) {
+    return Container(
+	    child: Positioned(
+		    top: 15,
+		    right: MediaQuery
+				    .of(context)
+				    .size
+				    .width / 2,
+		    child: Text(
+				    '$_current',
+				    style: (_current > 5) ? TextStyle(color: Colors.black) : TextStyle(color: Colors.red)
+		    ),
+	    )
+    );
+  }
+}
+
 
 class ImageView extends StatelessWidget {
   final String file;
@@ -246,6 +198,96 @@ class ImageView extends StatelessWidget {
               )
       ]
     )
+    );
+  }
+}
+
+class yesNo extends StatelessWidget {
+  final Quiz quiz;
+  final _MyHomePageState MyHomePageState;
+
+  yesNo(this.quiz, this.MyHomePageState);
+
+	@override
+  Widget build(BuildContext context) {
+    return Container(
+		    child: Row(
+				    mainAxisAlignment: MainAxisAlignment.center,
+				    children: <Widget>[
+					    ButtonTheme(
+						    minWidth: MediaQuery
+								    .of(context)
+								    .size
+								    .width / 2,
+						    height: 200,
+						    child: RaisedButton(
+							    onPressed: () {
+								    quiz.correct();
+								    if (quiz.dogs.length > 0) {
+									    MyHomePageState.sub.cancel();
+									    MyHomePageState.initTimer();
+									    MyHomePageState.startTimer();
+								    }
+							    },
+							    color: Colors.green,
+							    child: Icon(Icons.check),
+						    ),
+					    ),
+					    ButtonTheme(
+						    minWidth: MediaQuery
+								    .of(context)
+								    .size
+								    .width / 2,
+						    height: 200,
+						    child: RaisedButton(
+							    onPressed: () {
+								    if (quiz.dogs.length > 0)
+									    MyHomePageState.showAlertDialog(context);
+								    else
+									    null;
+							    },
+							    color: Colors.red,
+							    child: Icon(Icons.close),
+						    ),
+					    )
+				    ]
+		    )
+    );
+  }
+}
+
+class finalPage extends StatelessWidget {
+	final Quiz quiz;
+	final _MyHomePageState MyHomePageState;
+	finalPage(this.quiz, this.MyHomePageState);
+
+	@override
+  Widget build(BuildContext context) {
+    return Container(
+	    child: Column(
+			    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+			    children: [
+				    Text(
+						    'You got ${quiz.getScore()} out of ${images.json['dogs'].length} correct!',
+						    style: TextStyle(fontSize: 20.0)
+				    ),
+				    Text(
+						    '',
+						    style: TextStyle(fontSize: 20.0)
+				    ),
+				    ButtonTheme(
+						    child: RaisedButton(
+								    child: Text(
+										    'Retry?',
+										    style: TextStyle(color: Colors.white)
+								    ),
+								    onPressed: () {
+									    MyHomePageState.initQuiz();
+								    }
+						    )
+				    ),
+			    ]
+	    )
     );
   }
 }
