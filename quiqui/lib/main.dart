@@ -117,17 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
 								    Container(
 									    child: (quiz.dogs.length > 0) ? ImageView(quiz.getDog(quiz.dogIndex).getFile()) : ImageView('lib/assets/images/icon.png'),
 								    ),
-								    (quiz.dogs.length > 0) ? Positioned(
-									    top: 15,
-									    right: MediaQuery
-											    .of(context)
-											    .size
-											    .width / 2,
-									    child: Text(
-											    '$_current',
-										    style: (_current > 5) ? TextStyle(color: Colors.black) : TextStyle(color: Colors.red)
-									    ),
-								    ) : Container(height:0)
+								    (quiz.dogs.length > 0) ? countDown(_current) : Container(height:0)
 							    ]
 						    ),
 						    Divider(),
@@ -141,14 +131,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-class timeHandler extends StatefulWidget {
-  @override
-  _timeHandlerState createState() => _timeHandlerState();
-}
+class countDown extends StatelessWidget {
+  int _current;
 
-class _timeHandlerState extends State<timeHandler> {
-  int _start = 10;
-  int _current = 10;
+  countDown(this._current);
 
 	@override
   Widget build(BuildContext context) {
@@ -167,7 +153,6 @@ class _timeHandlerState extends State<timeHandler> {
     );
   }
 }
-
 
 class ImageView extends StatelessWidget {
   final String file;
