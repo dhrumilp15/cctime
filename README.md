@@ -28,3 +28,9 @@ I took special consideration to keep the code easy to change, specifically payin
 I also implemented a side menu to change the chosen algorithm and dimensions! This should hopefully help others that build off of this.
 
 Currently supports binary tree and a more random algorithm.
+
+## Who is Who (QuiQui) App
+
+Take a look at /quiqui for my epic who-is-who dogs app!
+
+The 10 second timer was surprisingly difficult to implement because I implemented it last...
