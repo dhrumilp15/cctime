@@ -21,16 +21,13 @@ However, I learned a lot about good design, especially SRP (Single Responsibilit
 
 ## Maze App
 
-Take a look at /cc_maze for my Flutter Maze app!
+This app generates a random maze on each button press!
 
-I took special consideration to keep the code easy to change, specifically paying attention to SRP.
+Check it out in /cc_maze
 
-I also implemented a side menu to change the chosen algorithm and dimensions! This should hopefully help others that build off of this.
+## Other Work For CCExtractor
 
-Currently supports binary tree and a more random algorithm.
+The other work I've done for CCExtractor lives here:
 
-## Who is Who (QuiQui) App
-
-Take a look at /quiqui for my epic who-is-who dogs app!
-
-The 10 second timer was surprisingly difficult to implement because I implemented it last...
+- [Unit Converter](https://github.com/dhrumilp15/UnitConverter) is a unit converter! (as the name suggests hehe)
+- [Qui Qui (Who - Who)](https://github.com/dhrumilp15/quiqui) is a who-is-who app developed completely in flutter!
