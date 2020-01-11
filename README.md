@@ -18,3 +18,16 @@ Take a look at /cc_gps for my Flutter GPS app!
 This proved to take a surprising amount of time, requiring _a LOT_ of debugging. A surprising amount for such a simple task...
 
 However, I learned a lot about good design, especially SRP (Single Responsibility Principle). It felt like overkill for this task and was the cause of a lot of struggle because I implemented it incorrectly at first.
+
+## Maze App
+
+This app generates a random maze on each button press!
+
+Check it out in /cc_maze
+
+## Other Work For CCExtractor
+
+The other work I've done for CCExtractor lives here:
+
+- [Unit Converter](https://github.com/dhrumilp15/UnitConverter) is a unit converter! (as the name suggests hehe)
+- [Qui Qui (Who - Who)](https://github.com/dhrumilp15/quiqui) is a who-is-who app developed completely in flutter!
