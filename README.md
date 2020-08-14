@@ -29,5 +29,5 @@ Check it out in /cc_maze
 
 The other work I've done for CCExtractor lives here:
 
-- [Unit Converter](https://github.com/dhrumilp15/UnitConverter) is a unit converter! (as the name suggests hehe)
+- [Unit Converter](https://github.com/dhrumilp15/UnitConverter) is a graph-based command line unit converter!
 - [Qui Qui (Who - Who)](https://github.com/dhrumilp15/quiqui) is a who-is-who app developed completely in flutter!
